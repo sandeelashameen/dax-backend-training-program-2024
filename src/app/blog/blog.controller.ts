@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import BlogService from './blog.service';
+import { IBlog } from './Blog.model';
 
 class BlogController {
     static async createBlog(req: Request, res: Response): Promise<void> {
         try {
-            const blog = await BlogService.createBlog(req.body);
+            const blog: IBlog = await BlogService.createBlog(req.body);
             res.status(201).json(blog);
         } catch (error) {
             res.status(400).json({ error: (error as Error).message });
@@ -16,7 +17,7 @@ class BlogController {
         console.log(process.env.MONGODB_URI);
         console.log('====================================');
         try {
-            const blogs = await BlogService.getAllBlogs();
+            const blogs: IBlog[] = await BlogService.getAllBlogs();
             res.status(200).json(blogs);
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
@@ -25,7 +26,7 @@ class BlogController {
 
     static async getBlogById(req: Request, res: Response): Promise<void> {
         try {
-            const blog = await BlogService.getBlogById(req.params.id);
+            const blog: IBlog | null = await BlogService.getBlogById(req.params.id);
             res.status(200).json(blog);
         } catch (error) {
             res.status(404).json({ error: (error as Error).message });
@@ -34,7 +35,7 @@ class BlogController {
 
     static async updateBlog(req: Request, res: Response): Promise<void> {
         try {
-            const blog = await BlogService.updateBlog(req.params.id, req.body);
+            const blog: IBlog | null = await BlogService.updateBlog(req.params.id, req.body);
             res.status(200).json(blog);
         } catch (error) {
             res.status(400).json({ error: (error as Error).message });
