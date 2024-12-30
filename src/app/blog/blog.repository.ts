@@ -10,11 +10,11 @@ class BlogRepository {
     return await Blog.find();
   }
 
-  async findById(id) {
+  async findById(id: string) {
     return await Blog.findById(id);
   }
 
-  async updateById(id, data) {
+  async updateById(id: string, data: object) {
     return await Blog.findByIdAndUpdate(
       id,
       { ...data, updatedAt: Date.now() },
@@ -22,7 +22,7 @@ class BlogRepository {
     );
   }
 
-  async deleteById(id) {
+  async deleteById(id: string) {
     return await Blog.findByIdAndDelete(id);
   }
 }
